@@ -1269,7 +1269,7 @@ End Sub
 **Succes în automatizarea sarcinilor voastre!**
 
 
-# Cod de copiat la curs
+# Cod la curs
 
 ## Reset worksheets
 
