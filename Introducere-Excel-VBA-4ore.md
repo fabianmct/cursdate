@@ -1267,3 +1267,35 @@ End Sub
 **Mulțumim pentru participarea la acest curs introductiv de Excel VBA!**
 
 **Succes în automatizarea sarcinilor voastre!**
+
+
+## Cod in curs
+
+### Exemplu
+
+```vba
+Sub TipuriDeDate()
+    ' Declararea variabilelor cu tipuri specifice
+    Dim numeClient As String        ' Text (siruri de caractere)
+    Dim varsta As Integer          ' Numere intregi (-32,768 la 32,767)
+    Dim pret As Double            ' Numere cu zecimale
+    Dim esteActiv As Boolean      ' Valori True/False
+    Dim dataComanda As Date       ' Date si ore
+    
+    ' Atribuirea valorilor
+    numeClient = "Alfreds Futterkiste"  ' Folosim ghilimele pentru text
+    varsta = 25
+    pret = 123.45
+    esteActiv = True
+    dataComanda = #12/31/2024#    ' Datele se incadreaza in #
+    
+    ' Afisarea valorilor in ferestra Immediate (Ctrl+G)
+    Debug.Print "Client: " & numeClient
+    Debug.Print "Varsta: " & varsta
+    Debug.Print "Pret: " & pret
+    Debug.Print "Este activ: " & esteActiv
+    Debug.Print "Data comenzii: " & dataComanda
+End Sub
+```
+
+---
