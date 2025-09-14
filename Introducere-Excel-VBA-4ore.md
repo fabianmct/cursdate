@@ -1284,26 +1284,26 @@ Sub ResetWorksheets()
     Set wbCur = ThisWorkbook
     sThisPath = wbCur.Path
     If Len(sThisPath) = 0 Then
-        Err.Raise vbObjectError + 10, , "Salva?i mai întâi registrul curent pentru a avea un folder de lucru."
+        Err.Raise vbObjectError + 10, , "Salvati mai întâi registrul curent pentru a avea un folder de lucru."
     End If
 
     sSrcPath = sThisPath & Application.PathSeparator & "Northwind.xlsx"
     If Dir$(sSrcPath, vbNormal) = "" Then
-        Err.Raise vbObjectError + 11, , "Nu s-a gasit fi?ierul 'Northwind.xlsx' în acela?i folder."
+        Err.Raise vbObjectError + 11, , "Nu s-a gasit fi?ierul 'Northwind.xlsx' în acelasi folder."
     End If
 
     ' 1) Adauga foaie temporara
     Set wsTemp = wbCur.Worksheets.Add(After:=wbCur.Worksheets(wbCur.Worksheets.Count))
     wsTemp.Name = "TEMP_Import"
 
-    ' 1) ?terge toate foile existente, mai pu?in foaia temporara
+    ' 1) Sterge toate foile existente, mai putin foaia temporara
     For Each ws In wbCur.Worksheets
         If ws.Name <> wsTemp.Name Then
             ws.Delete
         End If
     Next ws
 
-    ' 2) Deschide Northwind.xlsx ?i copiaza toate foile în registrul curent
+    ' 2) Deschide Northwind.xlsx si copiaza toate foile în registrul curent
     Set wbSrc = Application.Workbooks.Open(Filename:=sSrcPath, ReadOnly:=True)
 
     Dim i As Long
@@ -1315,7 +1315,7 @@ Sub ResetWorksheets()
     wbSrc.Close SaveChanges:=False
     Set wbSrc = Nothing
 
-    ' 3) ?terge foaia temporara
+    ' 3) Sterge foaia temporara
     wsTemp.Delete
     Set wsTemp = Nothing
 
