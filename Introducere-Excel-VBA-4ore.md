@@ -1269,33 +1269,62 @@ End Sub
 **Succes în automatizarea sarcinilor voastre!**
 
 
-## Cod in curs
+# Cod de copiat la curs
 
-### Exemplu
+## Reset worksheets
 
 ```vba
-Sub TipuriDeDate()
-    ' Declararea variabilelor cu tipuri specifice
-    Dim numeClient As String        ' Text (siruri de caractere)
-    Dim varsta As Integer          ' Numere intregi (-32,768 la 32,767)
-    Dim pret As Double            ' Numere cu zecimale
-    Dim esteActiv As Boolean      ' Valori True/False
-    Dim dataComanda As Date       ' Date si ore
-    
-    ' Atribuirea valorilor
-    numeClient = "Alfreds Futterkiste"  ' Folosim ghilimele pentru text
-    varsta = 25
-    pret = 123.45
-    esteActiv = True
-    dataComanda = #12/31/2024#    ' Datele se incadreaza in #
-    
-    ' Afisarea valorilor in ferestra Immediate (Ctrl+G)
-    Debug.Print "Client: " & numeClient
-    Debug.Print "Varsta: " & varsta
-    Debug.Print "Pret: " & pret
-    Debug.Print "Este activ: " & esteActiv
-    Debug.Print "Data comenzii: " & dataComanda
+Sub ResetWorksheets()
+    ' Optimizari
+    Application.DisplayAlerts = False
+    Application.ScreenUpdating = False
+    Application.EnableEvents = False
+    Application.Calculation = xlCalculationManual
+
+    Set wbCur = ThisWorkbook
+    sThisPath = wbCur.Path
+    If Len(sThisPath) = 0 Then
+        Err.Raise vbObjectError + 10, , "Salva?i mai întâi registrul curent pentru a avea un folder de lucru."
+    End If
+
+    sSrcPath = sThisPath & Application.PathSeparator & "Northwind.xlsx"
+    If Dir$(sSrcPath, vbNormal) = "" Then
+        Err.Raise vbObjectError + 11, , "Nu s-a gasit fi?ierul 'Northwind.xlsx' în acela?i folder."
+    End If
+
+    ' 1) Adauga foaie temporara
+    Set wsTemp = wbCur.Worksheets.Add(After:=wbCur.Worksheets(wbCur.Worksheets.Count))
+    wsTemp.Name = "TEMP_Import"
+
+    ' 1) ?terge toate foile existente, mai pu?in foaia temporara
+    For Each ws In wbCur.Worksheets
+        If ws.Name <> wsTemp.Name Then
+            ws.Delete
+        End If
+    Next ws
+
+    ' 2) Deschide Northwind.xlsx ?i copiaza toate foile în registrul curent
+    Set wbSrc = Application.Workbooks.Open(Filename:=sSrcPath, ReadOnly:=True)
+
+    Dim i As Long
+    For i = 1 To wbSrc.Worksheets.Count
+        wbSrc.Worksheets(i).Copy After:=wbCur.Worksheets(wbCur.Worksheets.Count)
+    Next i
+
+    ' Închide sursa fara a salva
+    wbSrc.Close SaveChanges:=False
+    Set wbSrc = Nothing
+
+    ' 3) ?terge foaia temporara
+    wsTemp.Delete
+    Set wsTemp = Nothing
+
+    Application.DisplayAlerts = True
+    Application.ScreenUpdating = True
+    Application.EnableEvents = True
+    Application.Calculation = xlCalculationAutomatic
 End Sub
+
 ```
 
 ---
