@@ -1,4 +1,4 @@
-# INTRODUCERE ÎN EXCEL VBA
+# INTRODUCERE ÎN VBA
 ## Prelegere de 4 ore cu exemple practice
 
 ---
